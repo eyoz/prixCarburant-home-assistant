@@ -219,7 +219,6 @@ class PrixCarburantClient(object):
         return nearStation
 
     def clean(self):
-        print("HALLO")
         self.removeFile("station.csv")
         self.removeFile(self.xmlData)
         self.removeFile("PrixCarburants_instantane.zip")
