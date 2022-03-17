@@ -160,6 +160,6 @@ entities:
 
 # Information
 
-Source code du client si vous souhaitez contribuer : "https://github.com/ryann72/essence"
+Source code d'origine (!) du client, maintenant intégré dans cet repo (si vous souhaitez l'analyser): "https://github.com/ryann72/essence"
 
-Il s'agit d'un fork de https://github.com/max5962/prixCarburant-home-assistant, mis à jour afin de recuperer le E85 et le GPLc
+Il s'agit d'un fork de https://github.com/max5962/prixCarburant-home-assistant, pour avoir des chiffres instantanés
