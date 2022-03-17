@@ -4,7 +4,7 @@ Client python permettant d'interroger l'openData du gouvernement sur le prix du 
 
 https://www.prix-carburants.gouv.fr/
 
-* C'est un FORK pour extraires des données instantanés (au lieu de 'hier'), par incorporer le prixCaruburantClient.py modifié *
+<h3> C'est un FORK pour extraires des données instantanés (au lieu de 'hier'), par incorporer le prixCaruburantClient.py modifié </h3>
 
 Le client permet de :
  - Trouver les stations les plus proches dans un cercle de X km configurable a partir de votre adresse defini dans home assistant
