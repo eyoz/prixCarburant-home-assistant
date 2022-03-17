@@ -3,6 +3,6 @@
   "country": "FR",
   "domains": ["sensor"],
   "render_readme": true,
-  "documentation": "https://github.com/ryann72/prixCarburant-home-assistant",
+  "documentation": "https://github.com/vingerha/prixCarburant-home-assistant",
   "homeassistant": "0.99.0"
 }

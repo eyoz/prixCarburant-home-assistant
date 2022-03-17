@@ -152,8 +152,6 @@ class PrixCarburantClient(object):
                           "PrixCarburants_instantane.zip")
             self.unzipFile("PrixCarburants_instantane.zip", './PrixCarburantsData')
             self.xmlData = "./PrixCarburantsData/PrixCarburants_instantane.xml"
-            #self.xmlData = "./PrixCarburantsData/PrixCarburants_quotidien_" + \
-            #     aDaybefore.strftime("%Y%m%d") + ".xml"
             self.stationsXML = self.decodeXML(self.xmlData)
             self.lastUpdate = datetime.today().date()
         except:
@@ -223,12 +221,12 @@ class PrixCarburantClient(object):
     def clean(self):
         print("HALLO")
         self.removeFile("station.csv")
-        #self.removeFile(self.xmlData)
-        #self.removeFile("PrixCarburants_instantane.zip")
-        #try:
-        #  shutil.rmtree('./PrixCarburantsData')
-        #except OSError as e:
-        #  logging.debug("Error: %s - %s." % (e.filename, e.strerror))
+        self.removeFile(self.xmlData)
+        self.removeFile("PrixCarburants_instantane.zip")
+        try:
+          shutil.rmtree('./PrixCarburantsData')
+        except OSError as e:
+          logging.debug("Error: %s - %s." % (e.filename, e.strerror))
 
 
     def decodeXML(self, file):
