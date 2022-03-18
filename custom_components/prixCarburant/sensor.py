@@ -28,6 +28,10 @@ ATTR_LAST_UPDATE = "Last update"
 CONF_MAX_KM = 'maxDistance'
 CONF_STATION_ID = 'stationID'
 
+'''
+No need to set the scan_inverval below 10 mins as the details instantanés have a refresh of max every 10 min.
+Suggestion to set hourly (default)
+'''
 SCAN_INTERVAL = timedelta(seconds=3600)
 
 
@@ -42,9 +46,9 @@ PLATFORM_SCHEMA = PLATFORM_SCHEMA.extend({
 
 
 def setup_platform(hass, config, add_devices, discovery_info=None):
+    logging.debug("[prixCarburantLoad] start")
     from .prixCarburantClient import PrixCarburantClient
     logging.basicConfig(stream=sys.stderr, level=logging.DEBUG)
-    logging.info("[prixCarburantLoad] start")
     """Setup the sensor platform."""
     latitude = config.get(CONF_LATITUDE, hass.config.latitude)
     longitude = config.get(CONF_LONGITUDE, hass.config.longitude)
@@ -90,6 +94,7 @@ class PrixCarburant(Entity):
         self._icon = icon        
         self._state = self.station.gazoil['valeur']
         self.lastUpdate=self.client.lastUpdate
+        self.lastUpdateTime=datetime.now()
         self._unique_id = "PrixCarburant_" + self.station.id
 
 
@@ -119,7 +124,8 @@ class PrixCarburant(Entity):
         return self._icon
 
     @property
-    def device_state_attributes(self):
+    #def device_state_attributes(self):
+    def extra_state_attributes(self):
         """Return the device state attributes of the last update."""
 
         attrs = {
@@ -138,26 +144,28 @@ class PrixCarburant(Entity):
             ATTR_GPL_LAST_UPDATE: self.station.gpl['maj'],
             ATTR_ADDRESS: self.station.adress,
             ATTR_NAME: self.station.name,
-            ATTR_LAST_UPDATE: self.client.lastUpdate.strftime('%Y-%m-%d')
+            ATTR_LAST_UPDATE: self.client.lastUpdateTime.strftime('%Y-%m-%d %H:%M')
         }
         return attrs
 
+    """Fetch new state data for the sensor.
+    This is the only method that should fetch new data for Home Assistant.
+
+    The sensor contains multiple elements that may or may not have updated over different dates and times.
+    The scan_interval kicks of for each (!) of the loaded sensors, 
+    The code below to avoid downloading / processing the same data for each sensor-call
+
+    IMPORTANT: do not set the scan_interval too low, there is no (business) need for it and may lead to the API rejecting requests
+
+    """
     def update(self):
-        """Fetch new state data for the sensor.
-
-        This is the only method that should fetch new data for Home Assistant.
-        """
-
-        self.client.reloadIfNecessary()
-        if self.client.lastUpdate == self.lastUpdate:
-            logging.debug("[UPDATE]["+self.station.id+"] valeur a jour") 
-        else:
-            logging.debug("[UPDATE]["+self.station.id+"] valeur pas a jour")
-            list = []
-            list.append(str(self.station.id))
-            myStation = self.client.extractSpecificStation(list)
-            self.station = myStation.get(self.station.id)
-            self.lastUpdate=self.client.lastUpdate
-
+        logging.warning('Start prixCarburant update process')
+        self.client.reload()
+        logging.warning("[UPDATE] of ["+self.station.id+"]")
+        list = []
+        list.append(str(self.station.id))
+        myStation = self.client.extractSpecificStation(list)
+        self.station = myStation.get(self.station.id)
+        self.lastUpdate=self.client.lastUpdate
         self._state = self.station.gazoil['valeur']
         self.client.clean()

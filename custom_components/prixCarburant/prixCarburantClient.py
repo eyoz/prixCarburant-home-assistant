@@ -7,6 +7,8 @@ import logging
 import sys
 import csv
 import os
+import pathlib
+import platform
 import shutil
 
 
@@ -35,6 +37,7 @@ class PrixCarburantClient(object):
         self.homeAssistantLocation = home_assistant_location
         self.maxKM = maxKM
         self.lastUpdate = datetime.today().date()
+        self.lastUpdateTime = datetime.now()
         logging.basicConfig(stream=sys.stderr, level=logging.DEBUG)
 
     def downloadFile(self, url, file):
@@ -140,22 +143,60 @@ class PrixCarburantClient(object):
             logging.debug("Informations are outdated")
             self.load()
             return True
-
+            
+    def reload(self):
+        if self.load():
+            logging.debug("[reload] Files loaded")
+            return True
+        else: 
+            logging.debug("[reload] Issue with load() of files")
+            return False
+    '''
+    Load only applies if the file is older than 10 minutes. 
+    Below loads 'instantané' which, according data.gouv.fr, is updated very 10 minutes
+    As multiple sensors can run, no sense to kick off a download for each of them
+    '''
+    def checkFileAge(self, filename):      
+        try: 
+            p = os.stat(filename)
+            dt = datetime.fromtimestamp(p.st_ctime)
+            diff = datetime.now() - dt
+            if int(diff.total_seconds()) < 600:
+                logging.debug("[checkFileAge] Prixcarburant newer than 10 mins")
+                return True
+            else:
+                logging.debug("[checkFileAge] Prixcarburant older than 10 mins")
+                return False
+        except:
+            logging.warning("[checkFileAge] Failed to read file(s): check load()")
+            return False
+    
     def load(self):
         aDaybefore = datetime.today() - timedelta(days=1)
-        try:
-            self.downloadFile(
-                 "https://static.data.gouv.fr/resources/prix-des-carburants-en-france/20181117-111538/active-stations.csv",
-                 "station.csv")
-            self.stations = self.loadStation('station.csv')
-            self.downloadFile("https://donnees.roulez-eco.fr/opendata/instantane",
-                          "PrixCarburants_instantane.zip")
-            self.unzipFile("PrixCarburants_instantane.zip", './PrixCarburantsData')
-            self.xmlData = "./PrixCarburantsData/PrixCarburants_instantane.xml"
+        if not self.checkFileAge('./custom_components/PrixCarburantsData/PrixCarburants_instantane.xml'):
+            logging.warning("Local file(s) old or missing: downloading new set")
+            try:
+                self.downloadFile("https://donnees.roulez-eco.fr/opendata/instantane",
+                            "PrixCarburants_instantane.zip")
+                self.unzipFile("PrixCarburants_instantane.zip", './custom_components/PrixCarburantsData')
+                self.downloadFile(
+                    "https://static.data.gouv.fr/resources/prix-des-carburants-en-france/20181117-111538/active-stations.csv",
+                    "./custom_components/PrixCarburantsData/station.csv")
+                self.stations = self.loadStation('./custom_components/PrixCarburantsData/station.csv')
+                self.xmlData = "./custom_components/PrixCarburantsData/PrixCarburants_instantane.xml"
+                self.stationsXML = self.decodeXML(self.xmlData)
+                self.lastUpdate = datetime.today().date()
+                
+            except:
+                logging.warning("Failed to download file(s) probably related to connectivity: retry later ")
+                return False
+        else:       
+            logging.warning("File up to date, no download needed")
+            self.stations = self.loadStation('./custom_components/PrixCarburantsData/station.csv')
+            self.xmlData = "./custom_components/PrixCarburantsData/PrixCarburants_instantane.xml"
             self.stationsXML = self.decodeXML(self.xmlData)
             self.lastUpdate = datetime.today().date()
-        except:
-            logging.warning("Failed to download new data, will be retry ")
+            return True
 
     def extractSpecificStation(self, listToExtract):
         stationsExtracted = {}
@@ -219,13 +260,14 @@ class PrixCarburantClient(object):
         return nearStation
 
     def clean(self):
-        self.removeFile("station.csv")
-        self.removeFile(self.xmlData)
-        self.removeFile("PrixCarburants_instantane.zip")
-        try:
-          shutil.rmtree('./PrixCarburantsData')
-        except OSError as e:
-          logging.debug("Error: %s - %s." % (e.filename, e.strerror))
+        logging.debug('No cleaning of files')
+        #self.removeFile("station.csv")
+        #self.removeFile(self.xmlData)
+        #self.removeFile("PrixCarburants_instantane.zip")
+        #try:
+        #  shutil.rmtree('./PrixCarburantsData')
+        #except OSError as e:
+        #  logging.debug("Error: %s - %s." % (e.filename, e.strerror))
 
 
     def decodeXML(self, file):
