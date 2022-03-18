@@ -9,6 +9,9 @@ https://www.prix-carburants.gouv.fr/
 Le client permet de :
  - Trouver les stations les plus proches dans un cercle de X km configurable a partir de votre adresse defini dans home assistant
  - Extraire des stations spécifiques via son ID
+ - faire des mises a jour intra-day
+
+<h4> A noter: cet version utilise un folder /custom_components/PrixCarburantsData pou stocker les données (au lieu de les télécharger pour chaque sensor) </h4>
 
 Aide à l'installation depuis HACS :
 
