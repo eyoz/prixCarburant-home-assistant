@@ -95,24 +95,20 @@ GPLc : {{ state_attr("sensor.prixcarburant_44300020", "GPLc") }} €
 
 #### via carte markdown dynamique (petite modification pour prix d'aujourd'hui)
 
-![alt text]![image](https://user-images.githubusercontent.com/44190435/159111030-33358579-a21b-4c8b-b525-4aeb94ae9e4f.png)
+![image](https://user-images.githubusercontent.com/44190435/159115045-7e02a1ad-6396-4f1f-b453-8ac1715c7578.png)
 
 * Carte markdown dynamique
 ```
 type: markdown
 title: Prix Gasoil
 content: >-
-  <table> <tr> <td><h4>Name</td> <td><h4>Gasoil</td><td><h4>maj</td></tr> {% for
-  station in (states.sensor | sort(attribute='state')) if 'prix' in
-  station.entity_id %} <tr><td> {{ state_attr(station.entity_id, 'Station name')
-  }}</td> <td>{{-  state_attr(station.entity_id, 'Gasoil') }}</td>   <td>{%- set
-  event = state_attr(station.entity_id,'Last Update Gasoil') | as_timestamp -%}
-  {%- set delta = ((event - now().timestamp()) / 86400) | round  -%}
-    {{ -delta }}j</td>
-  {{- '\n' -}}  <tr> <td>{{ state_attr(station.entity_id, 'Station Address') }}
-  </td><td>{{strptime(state_attr(station.entity_id, 'Last Update
-  Gasoil'),"%Y-%m-%d %H:%M:%S").strftime("%H:%M") -}}</td></td> {% endfor %}
-title: Prix des carburants
+  <table> <tr> <td><h4>Name</td><td><h4>Gasoil</td><td><h4>maj</td><td><h4>heure</td><td><h4>dist</td></tr> 
+  {% for station in (states.sensor | sort(attribute='state')) if 'prix' in station.entity_id %} 
+  <tr><td> {{ state_attr(station.entity_id, 'Station name') }}({{ state_attr(station.entity_id, 'Station City') }})</td>
+  <td>{{-  state_attr(station.entity_id, 'Gasoil') }}</td>
+  <td>{%- set event = state_attr(station.entity_id,'Last Update Gasoil') | as_timestamp -%} {%- set delta = ((event - now().timestamp()) / 86400) | round  -%}
+  {{ -delta }}j</td>
+  </td><td>{{strptime(state_attr(station.entity_id, 'Last Update Gasoil'),"%Y-%m-%d %H:%M:%S").strftime("%H:%M") -}}</td><td>{{ state_attr(station.entity_id, 'Distance') | round(1) }}</td> {% endfor %}
 ```
 
 #### via carte multiple-entity-row
