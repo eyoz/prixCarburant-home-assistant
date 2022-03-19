@@ -102,10 +102,13 @@ GPLc : {{ state_attr("sensor.prixcarburant_44300020", "GPLc") }} €
 type: markdown
 title: Prix Gasoil
 content: >-
-<table> <tr> <td><h4>Name</td> <td><h4>Gasoil</td><td><h4>maj</td><td><h4>heure</td><td><h4>dist</td></tr> {% for station in (states.sensor | sort(attribute='state')) if 'prix' in station.entity_id %} <tr><td> {{ state_attr(station.entity_id, 'Station name') }}({{ state_attr(station.entity_id, 'Station City') }})</td> <td>{{-  state_attr(station.entity_id, 'Gasoil') }}</td>   <td>{%- set event = state_attr(station.entity_id,'Last Update Gasoil') | as_timestamp -%} {%- set delta = ((event - now().timestamp()) / 86400) | round  -%}
+  <table> <tr> <td><h4>Name</td><td><h4>Gasoil</td><td><h4>maj</td><td><h4>heure</td><td><h4>dist</td></tr> 
+  {% for station in (states.sensor | sort(attribute='state')) if 'prix' in station.entity_id %} 
+  <tr><td> {{ state_attr(station.entity_id, 'Station name') }}({{ state_attr(station.entity_id, 'Station City') }})</td>
+  <td>{{-  state_attr(station.entity_id, 'Gasoil') }}</td>
+  <td>{%- set event = state_attr(station.entity_id,'Last Update Gasoil') | as_timestamp -%} {%- set delta = ((event - now().timestamp()) / 86400) | round  -%}
   {{ -delta }}j</td>
-
-</td><td>{{strptime(state_attr(station.entity_id, 'Last Update Gasoil'),"%Y-%m-%d %H:%M:%S").strftime("%H:%M") -}}</td><td>{{ state_attr(station.entity_id, 'Distance') | round(1) }}</td> {% endfor %}
+  </td><td>{{strptime(state_attr(station.entity_id, 'Last Update Gasoil'),"%Y-%m-%d %H:%M:%S").strftime("%H:%M") -}}</td><td>{{ state_attr(station.entity_id, 'Distance') | round(1) }}</td> {% endfor %}
 ```
 
 #### via carte multiple-entity-row
