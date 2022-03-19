@@ -25,7 +25,7 @@ class PrixCarburantClient(object):
     stations = {}
     homeAssistantLocation = [{'lat': 50, 'lng': 3}]
     maxKM = 0
-
+    
     _XML_SP95_TAG = 'SP95'
     _XML_SP98_TAG = 'SP98'
     _XML_E10_TAG = 'E10'
@@ -109,7 +109,35 @@ class PrixCarburantClient(object):
         else:
             logging.debug("   Outside the area")
         return toReturn
-
+    
+    
+    """
+    Separate function to extract distance of near stations
+    This could also be achieved by having isNear kick back 'km' instead of True/False
+    """
+    
+    def stationDistance(self, center_point, test_point):
+        logging.debug("Measuring distance : ")
+        logging.debug("   " + str(center_point))
+        logging.debug("   " + str(test_point))
+        if test_point[0]['lat'] == "" and test_point[0]['lng'] == "":
+            logging.debug(
+                '   [stationDistance] Impossible to get lattitude or longitude, impossible to found the station')
+            return False
+        lat1 = float(center_point[0]['lat'])
+        lon1 = float(center_point[0]['lng'])
+        lat2 = float(test_point[0]['lat']) / 100000
+        lon2 = float(test_point[0]['lng']) / 100000
+        a = self.distance(lon1, lat1, lon2, lat2)
+        logging.debug("   Distance (km) : %d km ", a)
+        distOK = a > 0
+        if distOK:
+            logging.debug("   distance ok")
+        else:
+            logging.debug("   distance not ok")
+        return round(a,3)
+    
+    
     """
     Calculate the great circle distance between two points
     on the earth (specified in decimal degrees)
@@ -219,6 +247,9 @@ class PrixCarburantClient(object):
             logging.debug(self.stations[elementxml.attrib['id']])
             name = self.stations[elementxml.attrib['id']][1]
             address = self.stations[elementxml.attrib['id']][3]
+            city = elementxml.findall(".//ville")[0].text
+            distance = self.stationDistance(self.homeAssistantLocation, [
+                    {'lat': elementxml.attrib['latitude'], 'lng': elementxml.attrib['longitude']}])
         else:
             name = "undefined"
             address = elementxml.findall(
@@ -227,6 +258,8 @@ class PrixCarburantClient(object):
         object = StationEssence(
             name,
             address,
+            city,
+            distance,
             elementxml.attrib['id'],
             self.extractPrice(elementxml, self._XML_GAZOLE_TAG),
             self.extractPrice(elementxml, self._XML_SP95_TAG),
@@ -284,6 +317,8 @@ class PrixCarburantClient(object):
 class StationEssence(object):
     name = ""
     adress = ""
+    city = ""
+    distance = 0
     id = 0
     gazoil = {}
     e95 = {}
@@ -292,9 +327,11 @@ class StationEssence(object):
     e85 = {}
     gpl = {}
 
-    def __init__(self, name, adress, id, gazoil, e95, e98, e10, e85, gpl):
+    def __init__(self, name, adress, city, distance, id, gazoil, e95, e98, e10, e85, gpl):
         self.name = name
         self.adress = adress
+        self.city = city
+        self.distance = distance
         self.id = id
         self.gazoil = gazoil
         self.e95 = e95
@@ -309,5 +346,5 @@ class StationEssence(object):
         return boole
 
     def __str__(self):
-        return "StationEssence:\n [\n - name : %s \n - adress : %s \n - id : %s \n - gazoil : %s \n - e95 : %s  \n - e98 : %s  \n - e10 : %s \n - e85 : %s \n - gplc : %s \n]" % (
-            self.name, self.adress, self.id, self.gazoil['valeur'], self.e95['valeur'], self.e98['valeur'], self.e10['valeur'], self.e85['valeur'], self.gpl['valeur'])
+        return "StationEssence:\n [\n - name : %s \n - adress : %s \n - city : %s \n - distance : %s \n - id : %s \n - gazoil : %s \n - e95 : %s  \n - e98 : %s  \n - e10 : %s \n - e85 : %s \n - gplc : %s \n]" % (
+            self.name, self.adress, self.city, self.distance, self.id, self.gazoil['valeur'], self.e95['valeur'], self.e98['valeur'], self.e10['valeur'], self.e85['valeur'], self.gpl['valeur'])

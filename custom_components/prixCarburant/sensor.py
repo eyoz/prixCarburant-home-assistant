@@ -21,8 +21,10 @@ ATTR_E98_LAST_UPDATE = 'Last Update E98'
 ATTR_E10_LAST_UPDATE = 'Last Update E10'
 ATTR_GPL_LAST_UPDATE = 'Last Update GPLc'
 ATTR_E85_LAST_UPDATE = 'Last Update E85'
+ATTR_CITY = 'Station City'
 ATTR_ADDRESS = "Station Address"
 ATTR_NAME = "Station name"
+ATTR_DISTANCE = "Distance"
 ATTR_LAST_UPDATE = "Last update"
 
 CONF_MAX_KM = 'maxDistance'
@@ -142,8 +144,10 @@ class PrixCarburant(Entity):
             ATTR_E85_LAST_UPDATE: self.station.e85['maj'],
             ATTR_GPL: self.station.gpl['valeur'],
             ATTR_GPL_LAST_UPDATE: self.station.gpl['maj'],
+            ATTR_CITY: self.station.city,
             ATTR_ADDRESS: self.station.adress,
             ATTR_NAME: self.station.name,
+            ATTR_DISTANCE: self.station.distance,
             ATTR_LAST_UPDATE: self.client.lastUpdateTime.strftime('%Y-%m-%d %H:%M')
         }
         return attrs
