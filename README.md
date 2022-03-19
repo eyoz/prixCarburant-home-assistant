@@ -45,25 +45,27 @@ sensor:
 
 Exemple de données extraites :
 ```
-Station ID: '44300020'
-Gasoil: '1.519'
-Last Update Gasoil: '2021-02-23T19:23:06'
-E95: '1.622'
-Last Update E95: '2021-02-23T19:23:07'
-E98: '1.685'
-Last Update E98: '2021-02-23T19:23:08'
-E10: '1.563'
-Last Update E10: '2021-02-23T19:23:07'
+Station ID: 6250011
+Gasoil: 2.039
+Last Update Gasoil: 2022-03-17 17:05:00
+E95: None
+Last Update E95: 
+E98: 2.119
+Last Update E98: 2022-03-16 16:55:00
+E10: 1.999
+Last Update E10: 2022-03-16 16:55:00
 E85: None
-Last Update E85: ''
-GPLc: '0.909'
-Last Update GPLc: '2021-02-23T19:23:07'
-Station Address: 162 Route de Rennes Nantes
-Station name: undefined
-Last update: '2021-02-24'
+Last Update E85: 
+GPLc: None
+Last Update GPLc: 
+Station City: MOUGINS
+Station Address: 10641126 AVENUE SAINT MARTIN 06250 MOUGINS
+Station name: BP MOUGINS SAINT MARTIN
+Distance: 9.999
+Last update: 2022-03-19 09:28
 unit_of_measurement: €
-friendly_name: PrixCarburant_44300020
-icon: 'mdi:currency-eur'
+icon: mdi:currency-eur
+friendly_name: PrixCarburant_6250011
 ```
 ### Configuration d'affichage dans Home Assistant
 
