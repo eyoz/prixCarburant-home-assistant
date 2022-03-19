@@ -91,43 +91,25 @@ GPLc : {{ state_attr("sensor.prixcarburant_44300020", "GPLc") }} €
 {%- endif %}
 ```
 
-#### via carte markdown dynamique
+#### via carte markdown dynamique (petite modification pour prix d'aujourd'hui)
 
-![alt text](https://forum.hacf.fr/uploads/default/original/2X/6/68418b4f3fcc38b584ce3f56efe0121c251f5d6b.png)
+![alt text]![image](https://user-images.githubusercontent.com/44190435/159111030-33358579-a21b-4c8b-b525-4aeb94ae9e4f.png)
 
-Le but est d'avoir un groupe de station essence et de trié automatiquement la liste sur le prix.
-
-* Crée un groupe avec les stations essences désirer
-```
-group:
-  station_essence:
-  - sensor.prixcarburant_38220002
-  - sensor.prixcarburant_38320006
-  - sensor.prixcarburant_38800003
-  - sensor.prixcarburant_38700003
-```
 * Carte markdown dynamique
 ```
 type: markdown
+title: Prix Gasoil
 content: >-
-  {% set update = states('sensor.date') %}
-
-  {% set midnight = now().replace(hour=0, minute=0, second=0,
-  microsecond=0).timestamp() %}
-
-  {% set sorted_station_essence = "group.carburant" | expand |
-  sort(attribute='attributes.Gasoil') %}
-    | Station | &nbsp;&nbsp;&nbsp;&nbsp;Gasoil&nbsp;&nbsp;&nbsp;&nbsp; | &nbsp;&nbsp;&nbsp;&nbsp;Gpl&nbsp;&nbsp;&nbsp;&nbsp; | Update |
-    | :------- | :----: | :----: | ------: |
-  {% for station in sorted_station_essence %}| {{-
-  state_attr(station.entity_id, 'Station name') -}}
-    |{%- if state_attr(station.entity_id, "Gasoil") == "None" -%}-{%- else -%}{{- state_attr(station.entity_id, 'Gasoil') -}}{%- endif -%}
-    |{%- if state_attr(station.entity_id, "GPLc") == "None" -%}-{%- else -%}{{- state_attr(station.entity_id, 'GPLc') -}}{%- endif -%}
-  {%- set event = state_attr(station.entity_id,'Last Update Gasoil') |
-  as_timestamp -%}
-  {%- set delta = ((event - midnight) // 86400) | int -%}
-    |{{ -delta }} Jours|
-  {% endfor %}
+  <table> <tr> <td><h4>Name</td> <td><h4>Gasoil</td><td><h4>maj</td></tr> {% for
+  station in (states.sensor | sort(attribute='state')) if 'prix' in
+  station.entity_id %} <tr><td> {{ state_attr(station.entity_id, 'Station name')
+  }}</td> <td>{{-  state_attr(station.entity_id, 'Gasoil') }}</td>   <td>{%- set
+  event = state_attr(station.entity_id,'Last Update Gasoil') | as_timestamp -%}
+  {%- set delta = ((event - now().timestamp()) / 86400) | round  -%}
+    {{ -delta }}j</td>
+  {{- '\n' -}}  <tr> <td>{{ state_attr(station.entity_id, 'Station Address') }}
+  </td><td>{{strptime(state_attr(station.entity_id, 'Last Update
+  Gasoil'),"%Y-%m-%d %H:%M:%S").strftime("%H:%M") -}}</td></td> {% endfor %}
 title: Prix des carburants
 ```
 
