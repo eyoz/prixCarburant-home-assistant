@@ -141,6 +141,38 @@ entities:
     show_state: false
     entities:
 ```
+#### via carte flex-table0card
+![image](https://user-images.githubusercontent.com/44190435/159131530-d8089e78-bd5c-45a8-9b0b-9c32b1ae32a2.png)
+
+
+```
+type: custom:flex-table-card
+clickable: true
+sort_by: Gasoil
+max_rows: 8
+title: Gasoil
+entities:
+  include: sensor.prixcarburant*
+columns:
+  - name: nom station
+    data: Station name,Station City
+  - name: Gasoil
+    data: Gasoil
+    suffix: €
+  - name: Valid.
+    data: Last Update Gasoil
+    modify: Math.round((Date.now() - Date.parse(x)) / 36000 / 100 /24)
+    align: left
+    suffix: J
+  - name: Dist.
+    data: Distance
+    modify: Math.round(x)
+    suffix: km
+css:
+  tbody tr:nth-child(1): 'color: #00ff00'
+  tbody tr:nth-child(5): 'color: #f00020'
+style: null
+```
 
 # Information
 
