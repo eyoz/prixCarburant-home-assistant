@@ -9,6 +9,9 @@ https://www.prix-carburants.gouv.fr/
 Le client permet de :
  - Trouver les stations les plus proches dans un cercle de X km configurable a partir de votre adresse defini dans home assistant
  - Extraire des stations spécifiques via son ID
+ - faire des mises à jour intra-day
+
+<h4> A noter: cet version utilise un folder /custom_components/PrixCarburantsData pour stocker les données (au lieu de les télécharger pour chaque sensor) </h4>
 
 Aide à l'installation depuis HACS :
 
@@ -42,25 +45,27 @@ sensor:
 
 Exemple de données extraites :
 ```
-Station ID: '44300020'
-Gasoil: '1.519'
-Last Update Gasoil: '2021-02-23T19:23:06'
-E95: '1.622'
-Last Update E95: '2021-02-23T19:23:07'
-E98: '1.685'
-Last Update E98: '2021-02-23T19:23:08'
-E10: '1.563'
-Last Update E10: '2021-02-23T19:23:07'
+Station ID: 6250011
+Gasoil: 2.039
+Last Update Gasoil: 2022-03-17 17:05:00
+E95: None
+Last Update E95: 
+E98: 2.119
+Last Update E98: 2022-03-16 16:55:00
+E10: 1.999
+Last Update E10: 2022-03-16 16:55:00
 E85: None
-Last Update E85: ''
-GPLc: '0.909'
-Last Update GPLc: '2021-02-23T19:23:07'
-Station Address: 162 Route de Rennes Nantes
-Station name: undefined
-Last update: '2021-02-24'
+Last Update E85: 
+GPLc: None
+Last Update GPLc: 
+Station City: MOUGINS
+Station Address: 10641126 AVENUE SAINT MARTIN 06250 MOUGINS
+Station name: BP MOUGINS SAINT MARTIN
+Distance: 9.999
+Last update: 2022-03-19 09:28
 unit_of_measurement: €
-friendly_name: PrixCarburant_44300020
-icon: 'mdi:currency-eur'
+icon: mdi:currency-eur
+friendly_name: PrixCarburant_6250011
 ```
 ### Configuration d'affichage dans Home Assistant
 
@@ -88,43 +93,25 @@ GPLc : {{ state_attr("sensor.prixcarburant_44300020", "GPLc") }} €
 {%- endif %}
 ```
 
-#### via carte markdown dynamique
+#### via carte markdown dynamique (petite modification pour prix d'aujourd'hui)
 
-![alt text](https://forum.hacf.fr/uploads/default/original/2X/6/68418b4f3fcc38b584ce3f56efe0121c251f5d6b.png)
+![alt text]![image](https://user-images.githubusercontent.com/44190435/159111030-33358579-a21b-4c8b-b525-4aeb94ae9e4f.png)
 
-Le but est d'avoir un groupe de station essence et de trié automatiquement la liste sur le prix.
-
-* Crée un groupe avec les stations essences désirer
-```
-group:
-  station_essence:
-  - sensor.prixcarburant_38220002
-  - sensor.prixcarburant_38320006
-  - sensor.prixcarburant_38800003
-  - sensor.prixcarburant_38700003
-```
 * Carte markdown dynamique
 ```
 type: markdown
+title: Prix Gasoil
 content: >-
-  {% set update = states('sensor.date') %}
-
-  {% set midnight = now().replace(hour=0, minute=0, second=0,
-  microsecond=0).timestamp() %}
-
-  {% set sorted_station_essence = "group.carburant" | expand |
-  sort(attribute='attributes.Gasoil') %}
-    | Station | &nbsp;&nbsp;&nbsp;&nbsp;Gasoil&nbsp;&nbsp;&nbsp;&nbsp; | &nbsp;&nbsp;&nbsp;&nbsp;Gpl&nbsp;&nbsp;&nbsp;&nbsp; | Update |
-    | :------- | :----: | :----: | ------: |
-  {% for station in sorted_station_essence %}| {{-
-  state_attr(station.entity_id, 'Station name') -}}
-    |{%- if state_attr(station.entity_id, "Gasoil") == "None" -%}-{%- else -%}{{- state_attr(station.entity_id, 'Gasoil') -}}{%- endif -%}
-    |{%- if state_attr(station.entity_id, "GPLc") == "None" -%}-{%- else -%}{{- state_attr(station.entity_id, 'GPLc') -}}{%- endif -%}
-  {%- set event = state_attr(station.entity_id,'Last Update Gasoil') |
-  as_timestamp -%}
-  {%- set delta = ((event - midnight) // 86400) | int -%}
-    |{{ -delta }} Jours|
-  {% endfor %}
+  <table> <tr> <td><h4>Name</td> <td><h4>Gasoil</td><td><h4>maj</td></tr> {% for
+  station in (states.sensor | sort(attribute='state')) if 'prix' in
+  station.entity_id %} <tr><td> {{ state_attr(station.entity_id, 'Station name')
+  }}</td> <td>{{-  state_attr(station.entity_id, 'Gasoil') }}</td>   <td>{%- set
+  event = state_attr(station.entity_id,'Last Update Gasoil') | as_timestamp -%}
+  {%- set delta = ((event - now().timestamp()) / 86400) | round  -%}
+    {{ -delta }}j</td>
+  {{- '\n' -}}  <tr> <td>{{ state_attr(station.entity_id, 'Station Address') }}
+  </td><td>{{strptime(state_attr(station.entity_id, 'Last Update
+  Gasoil'),"%Y-%m-%d %H:%M:%S").strftime("%H:%M") -}}</td></td> {% endfor %}
 title: Prix des carburants
 ```
 
