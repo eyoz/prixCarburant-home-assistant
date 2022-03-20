@@ -68,7 +68,7 @@ unit_of_measurement: €
 icon: mdi:currency-eur
 friendly_name: PrixCarburant_6250011
 ```
-### Configuration d'affichage dans Home Assistant
+### Exemples de configuration d'affichage dans Home Assistant
 
 #### via carte markdown statique
 
@@ -142,7 +142,8 @@ entities:
     show_state: false
     entities:
 ```
-#### via carte flex-table0card
+#### via carte flex-table-card
+
 ![image](https://user-images.githubusercontent.com/44190435/159131530-d8089e78-bd5c-45a8-9b0b-9c32b1ae32a2.png)
 
 
