@@ -133,22 +133,22 @@ class PrixCarburant(Entity):
         attrs = {
             ATTR_ID: self.station.id,
             ATTR_GASOIL: self.station.gazoil['valeur'],
-            ATTR_GASOIL_LAST_UPDATE: self.station.gazoil['maj'],
+            ATTR_GASOIL_LAST_UPDATE: self.station.gazoil['maj'].replace(' ','T'),
             ATTR_E95: self.station.e95['valeur'],
-            ATTR_E95_LAST_UPDATE: self.station.e95['maj'],
+            ATTR_E95_LAST_UPDATE: self.station.e95['maj'].replace(' ','T'),
             ATTR_E98: self.station.e98['valeur'],
-            ATTR_E98_LAST_UPDATE: self.station.e98['maj'],
+            ATTR_E98_LAST_UPDATE: self.station.e98['maj'].replace(' ','T'),
             ATTR_E10: self.station.e10['valeur'],
-            ATTR_E10_LAST_UPDATE: self.station.e10['maj'],
+            ATTR_E10_LAST_UPDATE: self.station.e10['maj'].replace(' ','T'),
             ATTR_E85: self.station.e85['valeur'],
-            ATTR_E85_LAST_UPDATE: self.station.e85['maj'],
+            ATTR_E85_LAST_UPDATE: self.station.e85['maj'].replace(' ','T'),
             ATTR_GPL: self.station.gpl['valeur'],
-            ATTR_GPL_LAST_UPDATE: self.station.gpl['maj'],
+            ATTR_GPL_LAST_UPDATE: self.station.gpl['maj'].replace(' ','T'),
             ATTR_CITY: self.station.city,
             ATTR_ADDRESS: self.station.adress,
             ATTR_NAME: self.station.name,
             ATTR_DISTANCE: self.station.distance,
-            ATTR_LAST_UPDATE: self.client.lastUpdateTime.strftime('%Y-%m-%d %H:%M')
+            ATTR_LAST_UPDATE: self.client.lastUpdateTime.strftime('%Y-%m-%dT%H:%M')
         }
         return attrs
 
