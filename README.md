@@ -13,6 +13,10 @@ Le client permet de :
 
 <h4> A noter: cet version utilise un folder /custom_components/PrixCarburantsData pour stocker les données (au lieu de les télécharger pour chaque sensor) </h4>
 
+## Updates
+- 20220320: pour ameliorer sur iOS les datetime en ISO avec 'T' (YYYY-MM-DDTHH:MM:SS)
+
+
 Aide à l'installation depuis HACS :
 
 Dans HACS, cliquer sur ... puis depots personnalisés
