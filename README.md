@@ -44,8 +44,7 @@ sensor:
     - 59000080
 ```
 
-
-Exemple de données extraites :
+### Exemple de données extraites :
 ```
 Station ID: 6250011
 Gasoil: 2.039
@@ -176,8 +175,7 @@ css:
 style: null
 ```
 
-# Information
+## Information
+Sensor: fork de https://github.com/max5962/prixCarburant-home-assistant
+Client: maintenant intégré dans cet repo (si vous souhaitez l'analyser): "https://github.com/ryann72/essence"
 
-Source code d'origine (!) du client, maintenant intégré dans cet repo (si vous souhaitez l'analyser): "https://github.com/ryann72/essence"
-
-Il s'agit d'un fork de https://github.com/max5962/prixCarburant-home-assistant, pour avoir des chiffres instantanés
