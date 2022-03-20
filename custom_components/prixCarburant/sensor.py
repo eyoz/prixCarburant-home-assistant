@@ -129,6 +129,7 @@ class PrixCarburant(Entity):
     #def device_state_attributes(self):
     def extra_state_attributes(self):
         """Return the device state attributes of the last update."""
+        """Use ISO format for date to allow easier integration in iOS."""
 
         attrs = {
             ATTR_ID: self.station.id,
