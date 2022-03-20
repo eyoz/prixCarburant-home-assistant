@@ -13,7 +13,9 @@ Le client permet de :
 <h4> A noter: utilise folder "[config]/custom_components/PrixCarburantsData" pour stocker les données, au lieu de les télécharger pour chaque sensor individuel </h4>
 
 ## Updates
-- 20220320: pour ameliorer sur iOS les datetime en ISO avec 'T' (YYYY-MM-DDTHH:MM:SS)
+- 20220318: version1 , adapté au prix instantanés
+- 20220319: améliorer triatements des télechargements/unzip, ajout: Distance et City
+- 20220320: amelioration pour iOS, les datetime maintenant en format ISO avec 'T' (YYYY-MM-DDTHH:MM:SS)
 
 ## Installation depuis HACS :
 
