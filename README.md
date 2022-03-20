@@ -48,13 +48,13 @@ sensor:
 ```
 Station ID: 6250011
 Gasoil: 2.039
-Last Update Gasoil: 2022-03-17 17:05:00
+Last Update Gasoil: 2022-03-17T17:05:00
 E95: None
 Last Update E95: 
 E98: 2.119
-Last Update E98: 2022-03-16 16:55:00
+Last Update E98: 2022-03-16T16:55:00
 E10: 1.999
-Last Update E10: 2022-03-16 16:55:00
+Last Update E10: 2022-03-16T16:55:00
 E85: None
 Last Update E85: 
 GPLc: None
@@ -63,7 +63,7 @@ Station City: MOUGINS
 Station Address: 10641126 AVENUE SAINT MARTIN 06250 MOUGINS
 Station name: BP MOUGINS SAINT MARTIN
 Distance: 9.999
-Last update: 2022-03-19 09:28
+Last update: 2022-03-19T09:28
 unit_of_measurement: €
 icon: mdi:currency-eur
 friendly_name: PrixCarburant_6250011
