@@ -108,7 +108,7 @@ content: >-
   <td>{{-  state_attr(station.entity_id, 'Gasoil') }}</td>
   <td>{%- set event = state_attr(station.entity_id,'Last Update Gasoil') | as_timestamp -%} {%- set delta = ((event - now().timestamp()) / 86400) | round  -%}
   {{ -delta }}j</td>
-  </td><td>{{strptime(state_attr(station.entity_id, 'Last Update Gasoil'),"%Y-%m-%d %H:%M:%S").strftime("%H:%M") -}}</td><td>{{ state_attr(station.entity_id, 'Distance') | round(1) }}</td> {% endfor %}
+  </td><td>{{strptime(state_attr(station.entity_id, 'Last Update Gasoil'),"%Y-%m-%dT%H:%M:%S").strftime("%H:%M") -}}</td><td>{{ state_attr(station.entity_id, 'Distance') | round(1) }}</td> {% endfor %}
 ```
 
 #### via carte multiple-entity-row
