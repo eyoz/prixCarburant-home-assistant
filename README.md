@@ -1,28 +1,26 @@
 [![hacs_badge](https://img.shields.io/badge/HACS-Default-orange.svg)](https://github.com/custom-components/hacs)
+
 # prixCarburant-home-assistant
+<h4> C'est un fork de max5962, adapté pour extraires des données instantanés et inclus aussi une modification de prixCaruburantClient.py </h4>
+
 Client python permettant d'interroger l'openData du gouvernement sur le prix du carburant.
 
 https://www.prix-carburants.gouv.fr/
 
-<h3> C'est un FORK pour extraires des données instantanés (au lieu de 'hier'), par incorporer le prixCaruburantClient.py modifié </h3>
-
 Le client permet de :
  - Trouver les stations les plus proches dans un cercle de X km configurable a partir de votre adresse defini dans home assistant
  - Extraire des stations spécifiques via son ID
- - faire des mises à jour intra-day
+ - Faire des mises à jour intra-day (SCAN_INTERVAL dans sensor.py)
 
-<h4> A noter: cet version utilise un folder /custom_components/PrixCarburantsData pour stocker les données (au lieu de les télécharger pour chaque sensor) </h4>
+<h4> A noter: utilise folder /custom_components/PrixCarburantsData pour stocker les données, au lieu de les télécharger pour chaque sensor individuel </h4>
 
 ## Updates
 - 20220320: pour ameliorer sur iOS les datetime en ISO avec 'T' (YYYY-MM-DDTHH:MM:SS)
 
-
-Aide à l'installation depuis HACS :
+## Installation depuis HACS :
 
 Dans HACS, cliquer sur ... puis depots personnalisés
-
 Ajouter :
-
 - URL : https://github.com/vingerha/prixCarburant-home-assistant
 - Catégorie : Intégration
 
