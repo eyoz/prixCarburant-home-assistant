@@ -3,16 +3,14 @@
 # prixCarburant-home-assistant
 <h4> C'est un fork de max5962, adapté pour extraires des données instantanés et inclus aussi une modification de prixCaruburantClient.py </h4>
 
-Client python permettant d'interroger l'openData du gouvernement sur le prix du carburant.
-
-https://www.prix-carburants.gouv.fr/
+Client python permettant d'interroger l'openData du gouvernement sur le prix du carburant: https://www.prix-carburants.gouv.fr/
 
 Le client permet de :
  - Trouver les stations les plus proches dans un cercle de X km configurable a partir de votre adresse defini dans home assistant
  - Extraire des stations spécifiques via son ID
  - Faire des mises à jour intra-day (SCAN_INTERVAL dans sensor.py)
 
-<h4> A noter: utilise folder /custom_components/PrixCarburantsData pour stocker les données, au lieu de les télécharger pour chaque sensor individuel </h4>
+<h4> A noter: utilise folder "[config]/custom_components/PrixCarburantsData" pour stocker les données, au lieu de les télécharger pour chaque sensor individuel </h4>
 
 ## Updates
 - 20220320: pour ameliorer sur iOS les datetime en ISO avec 'T' (YYYY-MM-DDTHH:MM:SS)
