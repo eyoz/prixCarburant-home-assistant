@@ -1,24 +1,26 @@
 [![hacs_badge](https://img.shields.io/badge/HACS-Default-orange.svg)](https://github.com/custom-components/hacs)
+
 # prixCarburant-home-assistant
+<h4> C'est un fork de max5962, adapté pour extraires des données instantanés et inclus aussi une modification de prixCaruburantClient.py </h4>
+
 Client python permettant d'interroger l'openData du gouvernement sur le prix du carburant.
 
 https://www.prix-carburants.gouv.fr/
 
-<h3> C'est un FORK pour extraires des données instantanés (au lieu de 'hier'), par incorporer le prixCaruburantClient.py modifié </h3>
-
 Le client permet de :
  - Trouver les stations les plus proches dans un cercle de X km configurable a partir de votre adresse defini dans home assistant
  - Extraire des stations spécifiques via son ID
- - faire des mises à jour intra-day
+ - Faire des mises à jour intra-day (SCAN_INTERVAL dans sensor.py)
 
-<h4> A noter: cet version utilise un folder /custom_components/PrixCarburantsData pour stocker les données (au lieu de les télécharger pour chaque sensor) </h4>
+<h4> A noter: utilise folder /custom_components/PrixCarburantsData pour stocker les données, au lieu de les télécharger pour chaque sensor individuel </h4>
 
-Aide à l'installation depuis HACS :
+## Updates
+- 20220320: pour ameliorer sur iOS les datetime en ISO avec 'T' (YYYY-MM-DDTHH:MM:SS)
+
+## Installation depuis HACS :
 
 Dans HACS, cliquer sur ... puis depots personnalisés
-
 Ajouter :
-
 - URL : https://github.com/vingerha/prixCarburant-home-assistant
 - Catégorie : Intégration
 
@@ -42,8 +44,7 @@ sensor:
     - 59000080
 ```
 
-
-Exemple de données extraites :
+### Exemple de données extraites :
 ```
 Station ID: 6250011
 Gasoil: 2.039
@@ -108,7 +109,7 @@ content: >-
   <td>{{-  state_attr(station.entity_id, 'Gasoil') }}</td>
   <td>{%- set event = state_attr(station.entity_id,'Last Update Gasoil') | as_timestamp -%} {%- set delta = ((event - now().timestamp()) / 86400) | round  -%}
   {{ -delta }}j</td>
-  </td><td>{{strptime(state_attr(station.entity_id, 'Last Update Gasoil'),"%Y-%m-%d %H:%M:%S").strftime("%H:%M") -}}</td><td>{{ state_attr(station.entity_id, 'Distance') | round(1) }}</td> {% endfor %}
+  </td><td>{{strptime(state_attr(station.entity_id, 'Last Update Gasoil'),"%Y-%m-%dT%H:%M:%S").strftime("%H:%M") -}}</td><td>{{ state_attr(station.entity_id, 'Distance') | round(1) }}</td> {% endfor %}
 ```
 
 #### via carte multiple-entity-row
@@ -141,9 +142,40 @@ entities:
     show_state: false
     entities:
 ```
+#### via carte flex-table0card
+![image](https://user-images.githubusercontent.com/44190435/159131530-d8089e78-bd5c-45a8-9b0b-9c32b1ae32a2.png)
 
-# Information
 
-Source code d'origine (!) du client, maintenant intégré dans cet repo (si vous souhaitez l'analyser): "https://github.com/ryann72/essence"
+```
+type: custom:flex-table-card
+clickable: true
+sort_by: Gasoil
+max_rows: 8
+title: Gasoil
+entities:
+  include: sensor.prixcarburant*
+columns:
+  - name: nom station
+    data: Station name,Station City
+  - name: Gasoil
+    data: Gasoil
+    suffix: €
+  - name: Valid.
+    data: Last Update Gasoil
+    modify: Math.round((Date.now() - Date.parse(x)) / 36000 / 100 /24)
+    align: left
+    suffix: J
+  - name: Dist.
+    data: Distance
+    modify: Math.round(x)
+    suffix: km
+css:
+  tbody tr:nth-child(1): 'color: #00ff00'
+  tbody tr:nth-child(5): 'color: #f00020'
+style: null
+```
 
-Il s'agit d'un fork de https://github.com/max5962/prixCarburant-home-assistant, pour avoir des chiffres instantanés
+## Information
+Sensor: fork de https://github.com/max5962/prixCarburant-home-assistant
+Client: maintenant intégré dans cet repo (si vous souhaitez l'analyser): "https://github.com/ryann72/essence"
+
