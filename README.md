@@ -160,6 +160,7 @@ entities:
 columns:
   - name: nom station
     data: Station name,Station City
+    multi_delimiter: <br />
   - name: Gasoil
     data: Gasoil
     suffix: €
