@@ -356,5 +356,6 @@ class StationEssence(object):
         return boole
 
     def __str__(self):
-        return "StationEssence:\n [\n - name : %s \n - adress : %s \n - city : %s \n - distance : %s \n - id : %s \n - gazoil : %s \n - e95 : %s  \n - e98 : %s  \n - e10 : %s \n - e85 : %s \n - gplc : %s \n]" % (
+            def __str__(self):
+        return "StationEssence:\n [\n - name : %s \n - adress : %s \n - city : %s \n - latitude : %s \n - longitude : %s \n - distance : %s \n - id : %s \n - gazoil : %s \n - e95 : %s  \n - e98 : %s  \n - e10 : %s \n - e85 : %s \n - gplc : %s \n]" % (
             self.name, self.adress, self.city, self.latitude, self.longitude, self.distance, self.id, self.gazoil['valeur'], self.e95['valeur'], self.e98['valeur'], self.e10['valeur'], self.e85['valeur'], self.gpl['valeur'])
