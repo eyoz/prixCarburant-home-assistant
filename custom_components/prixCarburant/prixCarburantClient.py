@@ -335,7 +335,7 @@ class StationEssence(object):
     e85 = {}
     gpl = {}
 
-    def __init__(self, name, adress, city, distance, id, gazoil, e95, e98, e10, e85, gpl):
+    def __init__(self, name, adress, city, latitude, longitude, distance, id, gazoil, e95, e98, e10, e85, gpl):
         self.name = name
         self.adress = adress
         self.city = city
