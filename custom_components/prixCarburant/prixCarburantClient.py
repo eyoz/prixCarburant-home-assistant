@@ -247,6 +247,8 @@ class PrixCarburantClient(object):
             logging.debug(self.stations[elementxml.attrib['id']])
             name = self.stations[elementxml.attrib['id']][1]
             address = self.stations[elementxml.attrib['id']][3]
+            latitude = self.stations[elementxml.attrib['id']][4]
+            longitude = self.stations[elementxml.attrib['id']][5]
             city = elementxml.findall(".//ville")[0].text
             distance = self.stationDistance(self.homeAssistantLocation, [
                     {'lat': elementxml.attrib['latitude'], 'lng': elementxml.attrib['longitude']}])
@@ -261,6 +263,8 @@ class PrixCarburantClient(object):
             name,
             address,
             city,
+            latitude,
+            longitude,
             distance,
             elementxml.attrib['id'],
             self.extractPrice(elementxml, self._XML_GAZOLE_TAG),
@@ -320,6 +324,8 @@ class StationEssence(object):
     name = ""
     adress = ""
     city = ""
+    latitude = ""
+    longitude = ""
     distance = 0
     id = 0
     gazoil = {}
@@ -333,6 +339,8 @@ class StationEssence(object):
         self.name = name
         self.adress = adress
         self.city = city
+        self.latitude = latitude
+        self.longitude = longitude
         self.distance = distance
         self.id = id
         self.gazoil = gazoil
@@ -349,4 +357,4 @@ class StationEssence(object):
 
     def __str__(self):
         return "StationEssence:\n [\n - name : %s \n - adress : %s \n - city : %s \n - distance : %s \n - id : %s \n - gazoil : %s \n - e95 : %s  \n - e98 : %s  \n - e10 : %s \n - e85 : %s \n - gplc : %s \n]" % (
-            self.name, self.adress, self.city, self.distance, self.id, self.gazoil['valeur'], self.e95['valeur'], self.e98['valeur'], self.e10['valeur'], self.e85['valeur'], self.gpl['valeur'])
+            self.name, self.adress, self.city, self.latitude, self.longitude, self.distance, self.id, self.gazoil['valeur'], self.e95['valeur'], self.e98['valeur'], self.e10['valeur'], self.e85['valeur'], self.gpl['valeur'])

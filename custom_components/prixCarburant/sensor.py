@@ -24,6 +24,8 @@ ATTR_E85_LAST_UPDATE = 'Last Update E85'
 ATTR_CITY = 'Station City'
 ATTR_ADDRESS = "Station Address"
 ATTR_NAME = "Station name"
+ATTR_LATITUDE="latitude"
+ATTR_LONGITUDE= "longitude"
 ATTR_DISTANCE = "Distance"
 ATTR_LAST_UPDATE = "Last update"
 
@@ -146,6 +148,8 @@ class PrixCarburant(Entity):
             ATTR_GPL: self.station.gpl['valeur'],
             ATTR_GPL_LAST_UPDATE: self.station.gpl['maj'].replace(' ','T'),
             ATTR_CITY: self.station.city,
+            ATTR_LATITUDE = self.station.latitude,
+            ATTR_LONGITUDE = self.station.longitude,
             ATTR_ADDRESS: self.station.adress,
             ATTR_NAME: self.station.name,
             ATTR_DISTANCE: self.station.distance,
