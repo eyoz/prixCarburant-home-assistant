@@ -24,8 +24,8 @@ ATTR_E85_LAST_UPDATE = 'Last Update E85'
 ATTR_CITY = 'Station City'
 ATTR_ADDRESS = "Station Address"
 ATTR_NAME = "Station name"
-ATTR_LATITUDE="latitude"
-ATTR_LONGITUDE= "longitude"
+ATTR_LATITUDE = "latitude"
+ATTR_LONGITUDE = "longitude"
 ATTR_DISTANCE = "Distance"
 ATTR_LAST_UPDATE = "Last update"
 
