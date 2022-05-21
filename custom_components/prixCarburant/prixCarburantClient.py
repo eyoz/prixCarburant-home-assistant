@@ -257,6 +257,8 @@ class PrixCarburantClient(object):
             address = elementxml.findall(
                 ".//adresse")[0].text + " " + elementxml.findall(".//ville")[0].text
             city = elementxml.findall(".//ville")[0].text
+            latitude = "undefined"
+            longitude = "undefined"
             distance = self.stationDistance(self.homeAssistantLocation, [
                     {'lat': elementxml.attrib['latitude'], 'lng': elementxml.attrib['longitude']}])
         object = StationEssence(
