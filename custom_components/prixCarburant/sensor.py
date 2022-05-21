@@ -33,7 +33,7 @@ CONF_MAX_KM = 'maxDistance'
 CONF_STATION_ID = 'stationID'
 
 '''
-No need to set the scan_inverval below 10 mins as the details instantanés have a refresh of max every 10 min.
+No need to set the scan_inverval below 10 mins, as the details instantanés have a refresh of max every 10 min.
 Suggestion to set hourly (default)
 '''
 SCAN_INTERVAL = timedelta(seconds=3600)
