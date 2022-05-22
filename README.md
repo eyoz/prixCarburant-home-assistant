@@ -100,7 +100,6 @@ GPLc : {{ state_attr("sensor.prixcarburant_44300020", "GPLc") }} €
 
 ![image](https://user-images.githubusercontent.com/44190435/159115045-7e02a1ad-6396-4f1f-b453-8ac1715c7578.png)
 
-* Carte markdown dynamique
 ```
 type: markdown
 title: Prix Gasoil
@@ -178,6 +177,23 @@ css:
   tbody tr:nth-child(5): 'color: #f00020'
 style: null
 ```
+
+#### via carte map + auto-entities, dynamique
+```
+type: custom:auto-entities
+card:
+  type: map
+  show_empty: false
+filter:
+  template: >
+    [{% set ns = namespace(count=0) %} {% for x in expand(states.sensor)|
+    sort(attribute='state')| map(attribute='entity_id') %} {% if 'prix' in x and
+    ns.count < 12 %}'{{x}}',{% set ns.count = ns.count + 1 %}{% endif %}{%-
+    endfor %}]
+```
+![image](https://user-images.githubusercontent.com/44190435/169685871-3641d686-0fea-4054-92a1-e6531832cfa9.png)
+
+
 
 ## Information
 Sensor: fork de https://github.com/max5962/prixCarburant-home-assistant
