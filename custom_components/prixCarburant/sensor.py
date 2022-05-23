@@ -45,6 +45,7 @@ SCAN_INTERVAL = timedelta(seconds=3600)
 # Validation of the user's configuration
 PLATFORM_SCHEMA = PLATFORM_SCHEMA.extend({
     vol.Optional(CONF_MAX_KM, default=10): cv.positive_int,
+    vol.Optional(CONF_FUELTYPE default='gazoil'): cv.fueltype,
     vol.Optional(CONF_LATITUDE): cv.latitude,
     vol.Optional(CONF_LONGITUDE): cv.longitude,
     vol.Optional(CONF_STATION_ID, default=[]): cv.ensure_list
