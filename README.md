@@ -1,10 +1,7 @@
 [![hacs_badge](https://img.shields.io/badge/HACS-Default-orange.svg)](https://github.com/custom-components/hacs)
 
 # prixCarburant-home-assistant
-<h4> C'est un fork de max5962, adapté pour extraires des données instantanés et inclus aussi une modification de prixCaruburantClient.py </h4>
-
 Client python permettant d'interroger l'openData du gouvernement sur le prix du carburant: https://www.prix-carburants.gouv.fr/
-
 Le client permet de :
  - Trouver les stations les plus proches dans un cercle de X km configurable a partir de votre adresse defini dans home assistant
  - Extraire des stations spécifiques via son ID
@@ -13,11 +10,11 @@ Le client permet de :
 <h4> A noter: utilise folder "[config]/custom_components/PrixCarburantsData" pour stocker les données, au lieu de les télécharger pour chaque sensor individuel </h4>
 
 ## Updates
+- 20220523: "en developpement sur master" option de choisir autre carburant pour 'state' value (maintenant gazoil par defaut)
+- 20220523: v1.1.5 ajoutes des lat/lon pour une utilisation dans map-card (voir ci-sessus)
 - 20220320: amelioration pour iOS, les datetime maintenant en format ISO avec 'T' (YYYY-MM-DDTHH:MM:SS)
-- 20220319: améliorer triatements des télechargements/unzip, ajout: Distance et City
+- 20220319: améliorer le traitement des télechargements/unzip, ajout: Distance et City
 - 20220318: version de base, fork et adaptation au prix instantanés
-
-
 
 ## Installation depuis HACS :
 
@@ -27,7 +24,7 @@ Ajouter :
 - Catégorie : Intégration
 
 ## Configuration
-Exemple de configuration :
+Exemples de configuration :
 
 ### Configuration pour récupérer les stations dans un rayon de 20 km
 ```
@@ -35,7 +32,16 @@ sensor:
   platform: prixCarburant
   maxDistance: 20
 ```
-
+### Configuration pour avoir le prix de carburant E85 en 'state' 
+Par defaut state montre le prix gazoil
+Options: E95, E98, E10, E85, GPL, GAZOIL
+Note: si le API ne donne pas de prix selon fuelType, state montre 'None'
+```
+sensor:
+  platform: prixCarburant
+  maxDistance: 20
+  fuelType: E85
+```
 ### Configuration pour récupérer les stations très spécifique   
 ```
 sensor:
@@ -195,7 +201,8 @@ filter:
 
 
 
-## Information
-Sensor: fork de https://github.com/max5962/prixCarburant-home-assistant
-Client: maintenant intégré dans cet repo (si vous souhaitez l'analyser): "https://github.com/ryann72/essence"
+## Information & thanks
+Le tout est un basé sur les taff de https://github.com/max5962/prixCarburant-home-assistant et https://github.com/ryann72/essence
+
+# Un grand MERCI a ces deux !!
 
