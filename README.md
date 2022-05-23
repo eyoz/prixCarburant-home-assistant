@@ -32,10 +32,10 @@ sensor:
   platform: prixCarburant
   maxDistance: 20
 ```
-### Configuration pour avoir le prix de carburant E85 en 'state' 
-Par defaut state montre le prix gazoil
-Options: E95, E98, E10, E85, GPL, GAZOIL
+### Configuration pour avoir des prix de carburant différent en 'state' (defaut: gazoil)
+Options: E95, E98, E10, E85, GPL, GAZOIL (en majuscules)
 Note: si le API ne donne pas de prix selon fuelType, state montre 'None'
+Exemple pour E85
 ```
 sensor:
   platform: prixCarburant
