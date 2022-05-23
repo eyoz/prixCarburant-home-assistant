@@ -10,10 +10,10 @@ Le client permet de :
 <h4> A noter: utilise folder "[config]/custom_components/PrixCarburantsData" pour stocker les données, au lieu de les télécharger pour chaque sensor individuel </h4>
 
 ## Updates
-- 20220523: <en developpement sur master > option de choisir autre carburant pour 'state' value (maintenant gazoil par defaut)
-- 20220523: v1.1.5 ajoutes des lat/lon pour utilisatons dans map-card (voir ci-sessus)
+- 20220523: "en developpement sur master" option de choisir autre carburant pour 'state' value (maintenant gazoil par defaut)
+- 20220523: v1.1.5 ajoutes des lat/lon pour une utilisation dans map-card (voir ci-sessus)
 - 20220320: amelioration pour iOS, les datetime maintenant en format ISO avec 'T' (YYYY-MM-DDTHH:MM:SS)
-- 20220319: améliorer triatements des télechargements/unzip, ajout: Distance et City
+- 20220319: améliorer le traitement des télechargements/unzip, ajout: Distance et City
 - 20220318: version de base, fork et adaptation au prix instantanés
 
 ## Installation depuis HACS :
