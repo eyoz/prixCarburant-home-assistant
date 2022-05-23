@@ -33,8 +33,8 @@ sensor:
   maxDistance: 20
 ```
 ### Configuration pour avoir des prix de carburant différent en 'state' (defaut: gazoil)
-Options: E95, E98, E10, E85, GPL, GAZOIL (en majuscules)
-Note: si le API ne donne pas de prix selon fuelType, state montre 'None'
+- Options: E95, E98, E10, E85, GPL, GAZOIL (en majuscules)
+- Note: si le API ne donne pas de prix selon fuelType, state montre 'None'
 Exemple pour E85
 ```
 sensor:
