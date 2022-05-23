@@ -203,5 +203,6 @@ filter:
 
 ## Information & thanks
 Le tout est un basé sur les taff de https://github.com/max5962/prixCarburant-home-assistant et https://github.com/ryann72/essence
-#MERCI a eux
+
+# Un grand MERCI a ces deux !!
 
