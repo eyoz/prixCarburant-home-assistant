@@ -29,6 +29,7 @@ ATTR_LONGITUDE = "longitude"
 ATTR_DISTANCE = "Distance"
 ATTR_LAST_UPDATE = "Last update"
 
+
 CONF_MAX_KM = 'maxDistance'
 CONF_STATION_ID = 'stationID'
 CONF_FUELTYPE = 'fuelTYPE'
