@@ -108,15 +108,15 @@ class PrixCarburant(Entity):
         if str(fuelType) == 'gazoil':
             self._state = self.station.gazoil['valeur']
             logging.warning("[Fueltypeg (configyaml] " + fuelType)    
-        if fuelType == 'E95':
+        if str(fuelType) == 'E95':
             self._state = self.station.e95['valeur']
-        if fuelType == 'E98':
+        if str(fuelType) == 'E98':
             self._state = self.station.e98['valeur']    
-        if fuelType == 'E10':
+        if str(fuelType) == 'E10':
             self._state = self.station.e10['valeur']
-        if fuelType == 'E85':
+        if str(fuelType) == 'E85':
             self._state = self.station.e85['valeur']
-        if fuelType == 'GPL':
+        if str(fuelType) == 'GPL':
             self._state = self.station.gpl['valeur']
         else: 
             self._state = 'n.a.'
@@ -197,18 +197,18 @@ class PrixCarburant(Entity):
         myStation = self.client.extractSpecificStation(list)
         self.station = myStation.get(self.station.id)
         self.lastUpdate=self.client.lastUpdate
-        if fuelType == "gazoil":
+        if str(fuelType) == 'gazoil':
             self._state = self.station.gazoil['valeur']
-        if fuelType == "E95":
+            logging.warning("[Fueltypeg (configyaml] " + fuelType)    
+        if str(fuelType) == 'E95':
             self._state = self.station.e95['valeur']
-        if fuelType == "E98":
+        if str(fuelType) == 'E98':
             self._state = self.station.e98['valeur']    
-        if fuelType == "E10":
+        if str(fuelType) == 'E10':
             self._state = self.station.e10['valeur']
-        if fuelType == "E85":
+        if str(fuelType) == 'E85':
             self._state = self.station.e85['valeur']
-        if fuelType == "GPL":
+        if str(fuelType) == 'GPL':
             self._state = self.station.gpl['valeur']
         else: 
-            self._state = self.station.gazoil['valeur']
-        self.client.clean()
+            self._state = 'n.a.'
