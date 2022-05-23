@@ -29,10 +29,10 @@ ATTR_LONGITUDE = "longitude"
 ATTR_DISTANCE = "Distance"
 ATTR_LAST_UPDATE = "Last update"
 
-
 CONF_MAX_KM = 'maxDistance'
 CONF_STATION_ID = 'stationID'
 CONF_FUELTYPE = 'fuelType'
+fuelType = ''
 
 '''
 No need to set the scan_inverval below 10 mins, as the details instantanés have a refresh of max every 10 min.
@@ -100,7 +100,6 @@ class PrixCarburant(Entity):
         self.station = station
         self.client = client
         self._icon = icon
-        self.fuelType = fuelType
         self._state = self.station.gazoil['valeur']
         self.lastUpdate=self.client.lastUpdate
         self.lastUpdateTime=datetime.now()
