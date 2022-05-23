@@ -247,8 +247,8 @@ class PrixCarburantClient(object):
             logging.debug(self.stations[elementxml.attrib['id']])
             name = self.stations[elementxml.attrib['id']][1]
             address = self.stations[elementxml.attrib['id']][3]
-            latitude = elementxml.attrib['latitude']
-            longitude = elementxml.attrib['longitude']
+            latitude = float(elementxml.attrib['latitude']) / 100000
+            longitude = float(elementxml.attrib['longitude']) / 100000
             city = elementxml.findall(".//ville")[0].text
             distance = self.stationDistance(self.homeAssistantLocation, [
                     {'lat': elementxml.attrib['latitude'], 'lng': elementxml.attrib['longitude']}])
@@ -257,8 +257,8 @@ class PrixCarburantClient(object):
             address = elementxml.findall(
                 ".//adresse")[0].text + " " + elementxml.findall(".//ville")[0].text
             city = elementxml.findall(".//ville")[0].text
-            latitude = "undefined"
-            longitude = "undefined"
+            latitude = float(elementxml.attrib['latitude']) / 100000
+            longitude = float(elementxml.attrib['longitude']) / 100000
             distance = self.stationDistance(self.homeAssistantLocation, [
                     {'lat': elementxml.attrib['latitude'], 'lng': elementxml.attrib['longitude']}])
         object = StationEssence(
