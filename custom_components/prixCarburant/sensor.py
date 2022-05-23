@@ -62,7 +62,7 @@ def setup_platform(hass, config, add_devices, discovery_info=None):
     maxDistance = config.get(CONF_MAX_KM)
     listToExtract = config.get(CONF_STATION_ID)
     fuelType = config.get(CONF_FUELTYPE)
-
+    logging.warning("[FT] " + fuelType)
     homeLocation = [{
         'lat': str(latitude),
         'lng': str(longitude)
@@ -100,6 +100,7 @@ class PrixCarburant(Entity):
         self.station = station
         self.client = client
         self._icon = icon
+        self.fuelType = fuelType
         self._state = self.station.gazoil['valeur']
         self.lastUpdate=self.client.lastUpdate
         self.lastUpdateTime=datetime.now()
