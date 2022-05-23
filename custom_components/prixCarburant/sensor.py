@@ -104,6 +104,7 @@ class PrixCarburant(Entity):
         self.lastUpdate=self.client.lastUpdate
         self.lastUpdateTime=datetime.now()
         self._unique_id = "PrixCarburant_" + self.station.id
+        fuelType = config.get(CONF_FUELTYPE)
         logging.warning("[FT2] " + fuelType)
 
 
