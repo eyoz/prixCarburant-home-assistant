@@ -88,13 +88,13 @@ def setup_platform(hass, config, add_devices, discovery_info=None):
                  str(len(stations)) + " stations found")
     client.clean()
     for station in stations:
-        add_devices([PrixCarburant(stations.get(station), client,"mdi:currency-eur")])
+        add_devices([PrixCarburant(stations.get(station), client,"mdi:currency-eur",fuelType)])
 
 
 class PrixCarburant(Entity):
     """Representation of a Sensor."""
 
-    def __init__(self, station, client, icon):
+    def __init__(self, station, client, icon, fuelType):
         """Initialize the sensor."""
         self._state = None
         self.station = station
@@ -104,7 +104,6 @@ class PrixCarburant(Entity):
         self.lastUpdate=self.client.lastUpdate
         self.lastUpdateTime=datetime.now()
         self._unique_id = "PrixCarburant_" + self.station.id
-        fuelType = config.get(CONF_FUELTYPE)
         logging.warning("[FT2] " + fuelType)
 
 
