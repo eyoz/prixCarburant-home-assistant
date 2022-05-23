@@ -62,7 +62,7 @@ def setup_platform(hass, config, add_devices, discovery_info=None):
     maxDistance = config.get(CONF_MAX_KM)
     listToExtract = config.get(CONF_STATION_ID)
     fuelType = config.get(CONF_FUELTYPE)
-    logging.warning("[FT] " + fuelType)
+    logging.warning("[FT1] " + fuelType)
     homeLocation = [{
         'lat': str(latitude),
         'lng': str(longitude)
@@ -104,6 +104,7 @@ class PrixCarburant(Entity):
         self.lastUpdate=self.client.lastUpdate
         self.lastUpdateTime=datetime.now()
         self._unique_id = "PrixCarburant_" + self.station.id
+        logging.warning("[FT2] " + fuelType)
 
 
     @property
@@ -173,7 +174,7 @@ class PrixCarburant(Entity):
     """
     def update(self):
         logging.warning('Start prixCarburant update process')
-        logging.warning("[fuelType] is ["+fuelType+"]")
+        logging.warning("[FT3] " + fuelType)
         self.client.reload()
         logging.warning("[UPDATE] of ["+self.station.id+"]")
         list = []
