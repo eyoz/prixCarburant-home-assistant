@@ -32,7 +32,6 @@ ATTR_LAST_UPDATE = "Last update"
 CONF_MAX_KM = 'maxDistance'
 CONF_STATION_ID = 'stationID'
 CONF_FUELTYPE = 'fuelType'
-fuelType = ''
 
 '''
 No need to set the scan_inverval below 10 mins, as the details instantanés have a refresh of max every 10 min.
@@ -62,7 +61,6 @@ def setup_platform(hass, config, add_devices, discovery_info=None):
     maxDistance = config.get(CONF_MAX_KM)
     listToExtract = config.get(CONF_STATION_ID)
     fuelType = config.get(CONF_FUELTYPE)
-    logging.warning("[FT1] " + fuelType)
     homeLocation = [{
         'lat': str(latitude),
         'lng': str(longitude)
@@ -104,7 +102,7 @@ class PrixCarburant(Entity):
         self.lastUpdate=self.client.lastUpdate
         self.lastUpdateTime=datetime.now()
         self._unique_id = "PrixCarburant_" + self.station.id
-        logging.warning("[Fueltype (configyaml] " + str(fuelType))
+        logging.warning("[Fueltype (config)]: " + str(fuelType))
         if str(fuelType) == 'gazoil':
             self._state = self.station.gazoil['valeur'] 
         if str(fuelType) == 'E95':
@@ -193,7 +191,7 @@ class PrixCarburant(Entity):
         myStation = self.client.extractSpecificStation(list)
         self.station = myStation.get(self.station.id)
         self.lastUpdate=self.client.lastUpdate
-        logging.warning("[Fueltype (configyaml] " + str(fuelType))
+        logging.warning("[Fueltype (config)]: " + str(fuelType))
         if str(fuelType) == 'gazoil':
             self._state = self.station.gazoil['valeur'] 
         if str(fuelType) == 'E95':
