@@ -100,20 +100,7 @@ class PrixCarburant(Entity):
         self.station = station
         self.client = client
         self._icon = icon
-        if fuelType == "gazoil":
-            self._state = self.station.gazoil['valeur']
-        if fuelType == "E95":
-            self._state = self.station.e95['valeur']
-        if fuelType == "E98":
-            self._state = self.station.e98['valeur']    
-        if fuelType == "E10":
-            self._state = self.station.e10['valeur']
-        if fuelType == "E85":
-            self._state = self.station.e85['valeur']
-        if fuelType == "GPL":
-            self._state = self.station.gpl['valeur']
-        else: 
-            self._state = self.station.gazoil['valeur']
+        self._state = self.station.gazoil['valeur']
         self.lastUpdate=self.client.lastUpdate
         self.lastUpdateTime=datetime.now()
         self._unique_id = "PrixCarburant_" + self.station.id
