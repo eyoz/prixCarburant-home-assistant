@@ -201,7 +201,7 @@ filter:
 
 
 
-## Information
-Sensor: fork de https://github.com/max5962/prixCarburant-home-assistant
-Client: maintenant intégré dans cet repo (si vous souhaitez l'analyser): "https://github.com/ryann72/essence"
+## Information & thanks
+Le tout est un basé sur les taff de https://github.com/max5962/prixCarburant-home-assistant et https://github.com/ryann72/essence
+#MERCI a eux
 
