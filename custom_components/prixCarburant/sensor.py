@@ -32,7 +32,7 @@ ATTR_LAST_UPDATE = "Last update"
 
 CONF_MAX_KM = 'maxDistance'
 CONF_STATION_ID = 'stationID'
-CONF_FUELTYPE = 'fuelTYPE'
+CONF_FUELTYPE = 'fuelType'
 
 '''
 No need to set the scan_inverval below 10 mins, as the details instantanés have a refresh of max every 10 min.
@@ -48,6 +48,7 @@ PLATFORM_SCHEMA = PLATFORM_SCHEMA.extend({
     vol.Optional(CONF_LATITUDE): cv.latitude,
     vol.Optional(CONF_LONGITUDE): cv.longitude,
     vol.Optional(CONF_STATION_ID, default=[]): cv.ensure_list
+    vol.Optional(CONF_FUELTYPE, default=['gazoil']): cv.fueltype
 })
 
 
@@ -185,6 +186,7 @@ class PrixCarburant(Entity):
     """
     def update(self):
         logging.warning('Start prixCarburant update process')
+        logging.warning("[fuelType] is ["+fuelType+"]")
         self.client.reload()
         logging.warning("[UPDATE] of ["+self.station.id+"]")
         list = []
