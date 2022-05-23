@@ -107,6 +107,7 @@ class PrixCarburant(Entity):
         logging.warning("[Fueltype (configyaml] " + fuelType)
         if fuelType == 'gazoil':
             self._state = self.station.gazoil['valeur']
+            logging.warning("[Fueltypeg (configyaml] " + fuelType)    
         if fuelType == 'E95':
             self._state = self.station.e95['valeur']
         if fuelType == 'E98':
