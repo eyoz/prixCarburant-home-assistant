@@ -102,7 +102,7 @@ class PrixCarburant(Entity):
         self.lastUpdate=self.client.lastUpdate
         self.lastUpdateTime=datetime.now()
         self._unique_id = "PrixCarburant_" + self.station.id
-        logging.warning("[Fueltype (config)]: " + str(fuelType))
+        logging.debug("[Fueltype_init] " + fuelType)
         if str(fuelType) == 'gazoil':
             self._state = self.station.gazoil['valeur'] 
         if str(fuelType) == 'E95':
@@ -182,16 +182,14 @@ class PrixCarburant(Entity):
 
     """
     def update(self):
-        logging.warning('Start prixCarburant update process')
-        logging.warning("[FT3] " + fuelType)
+        logging.debug("[Fueltype_update] " + fuelType)
         self.client.reload()
-        logging.warning("[UPDATE] of ["+self.station.id+"]")
+        logging.debug("[UPDATE] of ["+self.station.id+"]")
         list = []
         list.append(str(self.station.id))
         myStation = self.client.extractSpecificStation(list)
         self.station = myStation.get(self.station.id)
         self.lastUpdate=self.client.lastUpdate
-        logging.warning("[Fueltype (config)]: " + str(fuelType))
         if str(fuelType) == 'gazoil':
             self._state = self.station.gazoil['valeur'] 
         if str(fuelType) == 'E95':

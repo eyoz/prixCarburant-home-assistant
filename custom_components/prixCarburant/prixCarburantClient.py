@@ -202,7 +202,7 @@ class PrixCarburantClient(object):
     def load(self):
         aDaybefore = datetime.today() - timedelta(days=1)
         if not self.checkFileAge('./custom_components/PrixCarburantsData/PrixCarburants_instantane.xml'):
-            logging.warning("Local file(s) old or missing: downloading new set")
+            logging.debug("Local file(s) old or missing: downloading new set")
             try:
                 self.downloadFile("https://donnees.roulez-eco.fr/opendata/instantane",
                             "PrixCarburants_instantane.zip")
@@ -219,7 +219,7 @@ class PrixCarburantClient(object):
                 logging.warning("Failed to download file(s) probably related to connectivity: retry later ")
                 return False
         else:       
-            logging.warning("File up to date, no download needed")
+            logging.debug("File up to date, no download needed")
             self.stations = self.loadStation('./custom_components/PrixCarburantsData/station.csv')
             self.xmlData = "./custom_components/PrixCarburantsData/PrixCarburants_instantane.xml"
             self.stationsXML = self.decodeXML(self.xmlData)
