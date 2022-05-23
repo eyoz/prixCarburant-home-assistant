@@ -1,7 +1,6 @@
 [![hacs_badge](https://img.shields.io/badge/HACS-Default-orange.svg)](https://github.com/custom-components/hacs)
 
 # prixCarburant-home-assistant
-<h4> C'est un fork de max5962, adapté pour extraires des données instantanés et inclus aussi une modification de prixCaruburantClient.py </h4>
 Client python permettant d'interroger l'openData du gouvernement sur le prix du carburant: https://www.prix-carburants.gouv.fr/
 Le client permet de :
  - Trouver les stations les plus proches dans un cercle de X km configurable a partir de votre adresse defini dans home assistant
@@ -17,8 +16,6 @@ Le client permet de :
 - 20220319: améliorer triatements des télechargements/unzip, ajout: Distance et City
 - 20220318: version de base, fork et adaptation au prix instantanés
 
-
-
 ## Installation depuis HACS :
 
 Dans HACS, cliquer sur ... puis depots personnalisés
@@ -27,7 +24,7 @@ Ajouter :
 - Catégorie : Intégration
 
 ## Configuration
-Exemple de configuration :
+Exemples de configuration :
 
 ### Configuration pour récupérer les stations dans un rayon de 20 km
 ```
@@ -35,8 +32,10 @@ sensor:
   platform: prixCarburant
   maxDistance: 20
 ```
-### Configuration pour avoir le prix de carburant E85 en 'state' (defaut prix gazoil), options: E95, E98, E10, E85, GPL, GAZOIL
-Si le station n'a pas de prix carburant selon fuelType, state montre 'None'
+### Configuration pour avoir le prix de carburant E85 en 'state' 
+Par defaut state montre le prix gazoil
+Options: E95, E98, E10, E85, GPL, GAZOIL
+Note: si le API ne donne pas de prix selon fuelType, state montre 'None'
 ```
 sensor:
   platform: prixCarburant
