@@ -98,6 +98,7 @@ class PrixCarburant(Entity):
         self.station = station
         self.client = client
         self._icon = icon
+        self.fuelType = fuelType
         self._state = self.station.gazoil['valeur']
         self.lastUpdate=self.client.lastUpdate
         self.lastUpdateTime=datetime.now()
