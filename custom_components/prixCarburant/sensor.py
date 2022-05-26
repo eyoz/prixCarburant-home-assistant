@@ -183,7 +183,7 @@ class PrixCarburant(Entity):
 
     """
     def update(self):
-        logging.debug("[Fueltype_update] " + fuelType)
+        logging.debug("[Fueltype_update] " + self.fuelType)
         self.client.reload()
         logging.debug("[UPDATE] of ["+self.station.id+"]")
         list = []
