@@ -184,6 +184,7 @@ class PrixCarburant(Entity):
     """
     def update(self):
         logging.debug("[Fueltype_update] " + self.fuelType)
+        logging.warning("[Fueltype_update] " + self.fuelType)
         self.client.reload()
         logging.debug("[UPDATE] of ["+self.station.id+"]")
         list = []
@@ -191,15 +192,15 @@ class PrixCarburant(Entity):
         myStation = self.client.extractSpecificStation(list)
         self.station = myStation.get(self.station.id)
         self.lastUpdate=self.client.lastUpdate
-        if str(fuelType) == 'gazoil':
+        if str(self.fuelType) == 'gazoil':
             self._state = self.station.gazoil['valeur'] 
-        if str(fuelType) == 'E95':
+        if str(self.fuelType) == 'E95':
             self._state = self.station.e95['valeur']
-        if str(fuelType) == 'E98':
+        if str(self.fuelType) == 'E98':
             self._state = self.station.e98['valeur']    
-        if str(fuelType) == 'E10':
+        if str(self.fuelType) == 'E10':
             self._state = self.station.e10['valeur']
-        if str(fuelType) == 'E85':
+        if str(self.fuelType) == 'E85':
             self._state = self.station.e85['valeur']
-        if str(fuelType) == 'GPL':
+        if str(self.fuelType) == 'GPL':
             self._state = self.station.gpl['valeur']
