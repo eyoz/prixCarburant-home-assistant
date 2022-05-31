@@ -26,6 +26,8 @@ Ajouter :
 ## Configuration
 Exemples de configuration :
 
+<b>Attention, si on change pour un rayon plus petit, il y a probablment des anciens sensors qui devraitent être effeacé a main (via Configuration > Entities)</b>
+
 ### Configuration pour récupérer les stations dans un rayon de 20 km
 ```
 sensor:
