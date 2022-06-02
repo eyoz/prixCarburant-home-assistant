@@ -205,8 +205,8 @@ class PrixCarburantClient(object):
             logging.debug("Local file(s) old or missing: downloading new set")
             try:
                 self.downloadFile("https://donnees.roulez-eco.fr/opendata/instantane",
-                            "PrixCarburants_instantane.zip")
-                self.unzipFile("PrixCarburants_instantane.zip", './custom_components/PrixCarburantsData')
+                            "./custom_components/PrixCarburantsData/PrixCarburants_instantane.zip")
+                self.unzipFile("./custom_components/PrixCarburantsData/PrixCarburants_instantane.zip", './custom_components/PrixCarburantsData')
                 self.downloadFile(
                     "https://static.data.gouv.fr/resources/prix-des-carburants-en-france/20181117-111538/active-stations.csv",
                     "./custom_components/PrixCarburantsData/station.csv")
