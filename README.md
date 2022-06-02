@@ -10,7 +10,7 @@ Le client permet de :
 <h4> A noter: utilise folder "[config]/custom_components/PrixCarburantsData" pour stocker les données, au lieu de les télécharger pour chaque sensor individuel </h4>
 
 ## Updates
-- 20220524: v1.2.0 ajout de l'option pour choisir un autre carburant dans 'state' value (maintenant gazoil par defaut), reduction des messages dans logs
+- 20220524: v1.2.1 ajout de l'option pour choisir un autre carburant dans 'state' value (maintenant gazoil par defaut), reduction des messages dans logs
 - 20220523: v1.1.5 ajoutes des lat/lon pour une utilisation dans map-card (voir ci-sessus)
 - 20220320: amelioration pour iOS, les datetime maintenant en format ISO avec 'T' (YYYY-MM-DDTHH:MM:SS)
 - 20220319: améliorer le traitement des télechargements/unzip, ajout: Distance et City
@@ -25,6 +25,8 @@ Ajouter :
 
 ## Configuration
 Exemples de configuration :
+
+<b>Attention, si on change pour un rayon plus petit, quelues anciens sensors devraient être effacé a main (via Configuration > Entities)</b>
 
 ### Configuration pour récupérer les stations dans un rayon de 20 km
 ```
@@ -199,6 +201,96 @@ filter:
 ```
 ![image](https://user-images.githubusercontent.com/44190435/169685871-3641d686-0fea-4054-92a1-e6531832cfa9.png)
 
+#### stack-in-card (hacs) et flex-table, dynamique
+Pas parfait mais ça marche, If faut ajouter un photo dans config/www/pictures (ou autre dossier....ici c'est essence.jpg)
+```
+type: vertical-stack
+cards:
+  - type: picture
+    image: /local/pictures/essence.jpg
+  - type: custom:flex-table-card
+    clickable: true
+    sort_by: E10+
+    max_rows: 5
+    entities:
+      include: sensor.prixcarburant*
+    columns:
+      - name: nom station
+        data: Station name, Station Address
+      - name: E10
+        data: E10
+        suffix: €
+      - name: Valid.
+        data: Last Update E10
+        modify: Math.round((Date.now() - Date.parse(x)) / 36000 / 100 /24)
+        align: left
+        suffix: J
+      - name: Dist.
+        data: Distance
+        modify: Math.round(x)
+        suffix: km
+    css:
+      tbody tr:nth-child(odd): 'background-color: rgba(255, 255, 255, 0.2)'
+      tbody tr:nth-child(even): 'background-color: rgba(255, 255, 255, 0.1)'
+      tbody tr:nth-child(1): 'color: #0033ff'
+      tbody tr:nth-child(5): 'color: #FF0000'
+    card_mod:
+      style: |
+        ha-card {
+        border-radius: 10px;
+        padding-bottom: 10px;
+        background-color: rgba(0, 0, 0, 0.1)
+        }
+        :host {
+        font-size: 13px;
+        border-radius: 10px;
+        }
+  - type: custom:flex-table-card
+    clickable: true
+    sort_by: E85+
+    max_rows: 5
+    entities:
+      include: sensor.prixcarburant*
+    columns:
+      - name: nom station
+        data: Station name, Station Address
+      - name: E85
+        data: E85
+        suffix: €
+      - name: Valid.
+        data: Last Update E85
+        modify: Math.round((Date.now() - Date.parse(x)) / 36000 / 100 /24)
+        align: left
+        suffix: J
+      - name: Dist.
+        data: Distance
+        modify: Math.round(x)
+        suffix: km
+    css:
+      tbody tr:nth-child(odd): 'background-color: rgba(255, 255, 255, 0.2)'
+      tbody tr:nth-child(even): 'background-color: rgba(255, 255, 255, 0.1)'
+      tbody tr:nth-child(1): 'color: #0033ff'
+      tbody tr:nth-child(5): 'color: #FF0000'
+    card_mod:
+      style: |
+        ha-card {
+        border-radius: 10px;
+        background-color: rgba(0, 0, 0, 0.1)
+        }
+        :host {
+        font-size: 13px;
+        border-radius: 10px;
+        }
+card_mod:
+  style: |
+    ha-card {
+     --ha-card-background: rgba(0, 0, 0, 0.1);
+    ha-card {
+      margin-top: 0em;
+        }         
+
+```        
+![image](https://user-images.githubusercontent.com/44190435/171111718-36c02c34-d2f2-4710-8267-86fe2d72b5e4.png)
 
 
 ## Information & thanks
