@@ -1,3 +1,13 @@
+# Cet fork n'est plus maintent apd fin Juin 2022. 
+Voir l'autre for de Aozhan avec les mêmes functionalités
+## https://github.com/Aohzan/hass-prixcarburant
+
+
+
+
+
+
+
 [![hacs_badge](https://img.shields.io/badge/HACS-Default-orange.svg)](https://github.com/custom-components/hacs)
 
 # prixCarburant-home-assistant
