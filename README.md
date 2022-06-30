@@ -1,4 +1,4 @@
-# Cet fork n'est plus maintenu a partir de 28 Juin 2022. 
+# <red> Cet fork n'est plus maintenu a partir de 28 Juin 2022.</red>
 ### Voir le fork alternative de Aozhan avec les mêmes functionalités
 ### https://github.com/Aohzan/hass-prixcarburant
 
