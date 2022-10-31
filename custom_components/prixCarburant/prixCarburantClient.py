@@ -10,6 +10,7 @@ import os
 import pathlib
 import platform
 import shutil
+import tempfile
 
 
 """
@@ -39,6 +40,15 @@ class PrixCarburantClient(object):
         self.lastUpdate = datetime.today().date()
         self.lastUpdateTime = datetime.now()
         logging.basicConfig(stream=sys.stderr, level=logging.DEBUG)
+        self.tmpdir = os.path.join(tempfile.gettempdir(), "PrixCarburantClient")
+        self.xmlData = os.path.join(self.tmpdir, "PrixCarburants_instantane.xml")
+        self.station_csv = os.path.join(self.tmpdir, "station.csv")
+        self.stationsXML = []
+        if not os.path.isdir(self.tmpdir):
+            try:
+                os.mkdir(self.tmpdir)
+            except OSError as e:
+                logging.error("Error: %s - %s." % (e.filename, e.strerror))
 
     def downloadFile(self, url, file):
         logging.debug("Downloading ...")
@@ -201,27 +211,26 @@ class PrixCarburantClient(object):
     
     def load(self):
         aDaybefore = datetime.today() - timedelta(days=1)
-        if not self.checkFileAge('./custom_components/PrixCarburantsData/PrixCarburants_instantane.xml'):
+        if not self.checkFileAge(self.xmlData):
             logging.debug("Local file(s) old or missing: downloading new set")
             try:
+                zipfile = os.path.join(self.tmpdir, "PrixCarburants_instantane.zip")
                 self.downloadFile("https://donnees.roulez-eco.fr/opendata/instantane",
-                            "./custom_components/PrixCarburantsData/PrixCarburants_instantane.zip")
-                self.unzipFile("./custom_components/PrixCarburantsData/PrixCarburants_instantane.zip", './custom_components/PrixCarburantsData')
+                                  zipfile)
+                self.unzipFile(zipfile, self.tmpdir)
+                self.removeFile(zipfile)
                 self.downloadFile(
                     "https://static.data.gouv.fr/resources/prix-des-carburants-en-france/20181117-111538/active-stations.csv",
-                    "./custom_components/PrixCarburantsData/station.csv")
-                self.stations = self.loadStation('./custom_components/PrixCarburantsData/station.csv')
-                self.xmlData = "./custom_components/PrixCarburantsData/PrixCarburants_instantane.xml"
+                    self.station_csv)
+                self.stations = self.loadStation(self.station_csv)
                 self.stationsXML = self.decodeXML(self.xmlData)
                 self.lastUpdate = datetime.today().date()
-                
             except:
                 logging.warning("Failed to download file(s) probably related to connectivity: retry later ")
                 return False
         else:       
             logging.debug("File up to date, no download needed")
-            self.stations = self.loadStation('./custom_components/PrixCarburantsData/station.csv')
-            self.xmlData = "./custom_components/PrixCarburantsData/PrixCarburants_instantane.xml"
+            self.stations = self.loadStation(self.station_csv)
             self.stationsXML = self.decodeXML(self.xmlData)
             self.lastUpdate = datetime.today().date()
             return True
